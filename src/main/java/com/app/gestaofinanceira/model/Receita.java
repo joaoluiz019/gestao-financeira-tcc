@@ -1,10 +1,11 @@
 package com.app.gestaofinanceira.model;
 
-import com.app.gestaofinanceira.emum.Status;
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedDate;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
@@ -14,27 +15,24 @@ import java.util.UUID;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class Usuario {
+public class Receita {
     @Id
     @GeneratedValue(generator = "UUID")
     private UUID id;
 
     @Column(nullable = false)
-    private String nome;
-
-    @Column(unique = true, nullable = false)
-    private String email;
+    private float valor;
 
     @Column(nullable = false)
-    private String senha;
+    private String descricao;
 
     @Column(nullable = false)
-    @Enumerated(EnumType.STRING)
-    private Status status= Status.ATIVO;
+    private String mes;
 
     @CreatedDate
     private LocalDateTime dataCriacao;
 
-    @LastModifiedDate
-    private LocalDateTime dataAtualizacao;
+    @ManyToOne
+    @JoinColumn(name = "orcamento_id", nullable = false)
+    private Orcamento orcamento;
 }
